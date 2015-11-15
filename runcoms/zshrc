@@ -11,3 +11,68 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+function() {
+  local fb_prompt_file=/opt/facebook/share/scm-prompt
+  if [ -f "$fb_prompt_file" ]; then
+    source "$fb_prompt_file"
+  else
+    echo "couldn't find FB SCM prompt file ${fb_prompt_file}"
+  fi
+}
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
+export BASE_PATH=~/Dev
+export ANDROID_SDK=${BASE_PATH}/android-sdk-macosx
+export ANDROID_HOME=${ANDROID_SDK}
+export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
+export MAVEN_OPTS="-Xmx4g -XX:MaxPermSize=4g"
+export USER_NAME=royr
+export WORKSPACE=${BASE_PATH}/workspace
+
+if [ `uname` = "Darwin" ]; then
+    IS_MAC=true
+else
+    IS_MAC=false
+fi
+export IS_MAC
+
+PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:$PATH"
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+export PATH
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+if $IS_MAC ; then
+    # Setup AWS EC2 API tools
+    export EC2_PRIVATE_KEY="$(/bin/ls "$HOME"/.ec2/pk-*.pem | /usr/bin/head -1)"
+    export EC2_CERT="$(/bin/ls "$HOME"/.ec2/cert-*.pem | /usr/bin/head -1)"
+    export EC2_HOME="/usr/local/Library/LinkedKegs/ec2-api-tools/jars"
+fi
+
+if $IS_MAC; then
+    # Add github ssh key if missing
+    if [ -z "`ssh-add -l|grep github`" ] ; then 
+        ssh-add ~/.ssh/github_rsa
+    fi
+fi
+
+if $IS_MAC; then
+    # 'brew cask' should link apps to /Applications instead of ~/Applications
+    export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+fi
+# handle Mac OS X shitty support for terminal locales
+if $IS_MAC; then
+    export LC_CTYPE=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+fi
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+# yubikey only devserver login
+if [ -f ~/.bashrc_onavo ]; then
+    . ~/.bashrc_onavo
+fi
+
+export EDITOR=vim

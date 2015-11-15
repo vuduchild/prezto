@@ -49,7 +49,9 @@ function prompt_sorin_git_info {
     if [[ -s "$_prompt_sorin_precmd_async_data" ]]; then
       alias typeset='typeset -g'
       source "$_prompt_sorin_precmd_async_data"
-      RPROMPT+='${git_info:+${(e)git_info[status]}}'
+      #RPROMPT+='${git_info:+${(e)git_info[status]}}'
+      RPROMPT+='${git_info}'
+
       unalias typeset
     fi
 
@@ -64,7 +66,8 @@ function prompt_sorin_git_info {
 function prompt_sorin_precmd_async {
   # Get Git repository information.
   if (( $+functions[git-info] )); then
-    git-info
+    #git-info
+    git_info=$(_dotfiles_scm_info)
     typeset -p git_info >! "$_prompt_sorin_precmd_async_data"
   fi
 
