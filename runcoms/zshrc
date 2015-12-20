@@ -23,6 +23,8 @@ function() {
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
 export BASE_PATH=~/Dev
 export ANDROID_SDK=${BASE_PATH}/android-sdk-macosx
+export ANDROID_NDK_REPOSITORY=${ANDROID_SDK}
+export NDK_HOME=${ANDROID_SDK}/ndk-bundle
 export ANDROID_HOME=${ANDROID_SDK}
 export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools
 export MAVEN_OPTS="-Xmx4g -XX:MaxPermSize=4g"
@@ -76,3 +78,7 @@ if [ -f ~/.bashrc_onavo ]; then
 fi
 
 export EDITOR=vim
+export VISUAL=vim
+export FBANDROID_DIR=/Users/royr/Dev/fbsource/fbandroid
+alias quicklog_update=/Users/royr/Dev/fbsource/fbandroid/scripts/quicklog/quicklog_update.sh
+alias qlu=quicklog_update
