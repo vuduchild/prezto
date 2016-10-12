@@ -59,10 +59,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.bashrc_fb]; then
+if [ -f ~/.bashrc_fb ]; then
     . ~/.bashrc_fb
 fi
-if [ -f ~/.zshrc_fb]; then
+if [ -f ~/.zshrc_fb ]; then
     . ~/.zshrc_fb
 fi
 
